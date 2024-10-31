@@ -1,0 +1,24 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon api/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.21.1",
+    "@quixo3/prisma-session-store": "^3.1.13",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "express-session": "^1.18.1",
+    "nodemon": "^3.1.7",
+    "passport-local": "^1.0.0",
+    "prisma": "^5.21.1"
+  }
+}
