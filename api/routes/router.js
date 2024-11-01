@@ -2,18 +2,20 @@ const { Router } = require('express');
 const router = Router();
 const controller = require('../controllers/controller');
 
-router.get('/', controller.indexGet);
-router.get('/posts', controller.postsGet);
-// router.post('/posts', controller.postsPost);
-
 // router.get('/', controller.indexGet);
 // router.get('/login', controller.loginGet);
-// router.post('/login', controller.validate, controller.indexGet);
-// router.get('/logout', controller.logoutGet);
-// router.get('/register', controller.registerGet);
-// router.post('/register', controller.registerPost);
-// router.get('/folders/:id?', controller.foldersGet)
-// router.post('/folders/addFile', controller.uploadFile, controller.addFilePost)
-// router.post('/folders/addFolder', controller.addFolderPost)
+// router.get('/addPost', controller.addPostGet);
+
+router.get('/posts', controller.postsGet);
+router.post('/posts', controller.postsPost);
+router.get('/posts/:postId', controller.postGet); 
+router.put('/posts/:postId', controller.postPut); 
+router.delete('/posts/:postId', controller.postDelete); 
+
+router.get('/posts/:postId/comments', controller.commentsGet); 
+router.post('/posts/:postId/comments', controller.commentsPost);
+router.get('/posts/comments/:commentId', controller.commentGet); 
+router.put('/posts/comments/:commentId', controller.commentPut); 
+router.delete('/posts/comments/:commentId', controller.commentDelete);
 
 module.exports = router;

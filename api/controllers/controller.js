@@ -9,9 +9,119 @@ const passport = require('passport');
 exports.indexGet = (req, res, next) => {
     res.render('index');
 }
-exports.postsGet = (req, res, next) => {
-    res.render('posts');
+
+exports.loginGet = (req, res, next) => {
+    res.render('login');
 }
+
+exports.addPostGet = (req, res, next) => {
+    res.render('addPost');
+}
+
+exports.postsGet = async (req, res, next) => {
+    // res.render('posts');
+    // console.log(req.query);
+    
+    const posts = await prisma.post.findMany();
+    return res.send(posts);
+}
+exports.postsPost = async (req, res, next) => {
+    // console.log(res);
+    const post = await prisma.post.create({
+        data: {
+            title: req.body.title,
+            text: req.body.text,
+            authorId: 1,/////
+            isPublished: false,
+        }
+    })
+
+    // console.log(post);
+    
+    return res.send(post);
+}
+exports.postGet = async (req, res, next) => {
+    const post = await prisma.post.findUnique({
+        where: {
+            id: parseInt(req.params.postId),
+        }
+    });
+    return res.send(post);
+}
+exports.postPut = async (req, res, next) => {
+    const post = await prisma.post.update({
+        where: {
+            id: req.params.postId,
+        },
+        data: {
+            title: req.body.title,
+            text: req.body.text,
+        }
+    })
+    return res.send(post);
+}
+exports.postDelete = async (req, res, next) => {
+    const post = await prisma.post.delete({
+        where: {
+            id: req.params.postId,
+        }
+    })
+    return res.send(post);
+}
+
+exports.commentsGet = async (req, res, next) => {
+    const comments = await prisma.comment.findMany({
+        where: {
+            postId: parseInt(req.params.postId),
+        }
+    })
+    return res.send(comments);
+}
+exports.commentsPost = async (req, res, next) => {
+    const comment = await prisma.comment.create({
+        data: {
+            text: req.body.text,
+            postId: parseInt(req.params.postId),
+            authorID: 1/////
+        }
+    })
+    return res.send(comment);
+}
+exports.commentGet = async (req, res, next) => {
+    // console.log(req.params.commentId);
+    
+    const comment = await prisma.comment.findUnique({
+        where: {
+            id: parseInt(req.params.commentId),
+        }
+    })
+    return res.send(comment);
+}
+exports.commentPut = async (req, res, next) => {
+    const comment = await prisma.comment.update({
+        where: {
+            id: parseInt(req.params.commentId),
+        },
+        data: {
+            text: req.body.text,
+            // postId: parseInt(req.params.postId),
+            // authorID: 1/////
+        }
+    })
+    return res.send(comment);
+}
+exports.commentDelete = async (req, res, next) => {
+    const comment = await prisma.comment.delete({
+        where: {
+            id: parseInt(req.params.commentId),
+        }
+    })
+    return res.send(comment);
+}
+
+
+
+
 
 // exports.loginGet = (req, res, next) => {
 //     res.render('login');
