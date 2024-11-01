@@ -1,4 +1,3 @@
-// const { log } = require('console');
 // const db = require('../db/queries');
 const prisma = require('../prisma');
 const genPassword = require('../lib/passwordUtils').genPassword
@@ -20,13 +19,11 @@ exports.addPostGet = (req, res, next) => {
 
 exports.postsGet = async (req, res, next) => {
     // res.render('posts');
-    // console.log(req.query);
     
     const posts = await prisma.post.findMany();
     return res.send(posts);
 }
 exports.postsPost = async (req, res, next) => {
-    // console.log(res);
     const post = await prisma.post.create({
         data: {
             title: req.body.title,
@@ -36,7 +33,6 @@ exports.postsPost = async (req, res, next) => {
         }
     })
 
-    // console.log(post);
     
     return res.send(post);
 }
@@ -78,17 +74,23 @@ exports.commentsGet = async (req, res, next) => {
     return res.send(comments);
 }
 exports.commentsPost = async (req, res, next) => {
+    console.log('yeahhh');
+    
+    console.log(req.body);
+    console.log(req.body.postId);
+    
     const comment = await prisma.comment.create({
         data: {
             text: req.body.text,
-            postId: parseInt(req.params.postId),
+            postId: parseInt(req.body.postId),
             authorID: 1/////
         }
     })
+    console.log(comment);
+    
     return res.send(comment);
 }
 exports.commentGet = async (req, res, next) => {
-    // console.log(req.params.commentId);
     
     const comment = await prisma.comment.findUnique({
         where: {
@@ -123,20 +125,6 @@ exports.commentDelete = async (req, res, next) => {
 
 
 
-// exports.loginGet = (req, res, next) => {
-//     res.render('login');
-// }
-// exports.validate = passport.authenticate(
-//     'local',
-//     {
-//         failureRedirect: '/login-failure',
-//         // successRedirect: '/login-success',
-//     }
-// )
-// exports.loginPost = (req, res, next) => {
-//     // console.log(req.body.username);
-//     res.render('index')
-// }
 
 // exports.logoutGet = (req, res, next) => {
 //     req.logout(err => {
@@ -151,7 +139,6 @@ exports.commentDelete = async (req, res, next) => {
 //     res.render('register');
 // }
 // exports.registerPost = async (req, res, next) => {
-//     console.log(req.body);
 //     const saltHash = genPassword(req.body.password);
 
 //     const salt = saltHash.salt;
@@ -171,7 +158,6 @@ exports.commentDelete = async (req, res, next) => {
 // exports.foldersGet = async (req, res, next) => {
 //     let folders;
 //     let files;
-//     // console.log(req.params);
     
 
 //     if (!req.params.id) {
@@ -205,19 +191,13 @@ exports.commentDelete = async (req, res, next) => {
 //             }
 //         })
 //     }
-//     console.log(files);
-//     // console.log(folders[0].children[0].location);
-//     // console.log(files);
     
     
-//     // console.log(req.params);
     
-//     // console.log(folders[0].children);
     
 //     res.render('folders', {folders:folders, files: files});
 // }
 // exports.addFolderPost = async (req, res, next) => {
-//     console.log(req.body);
 //     await prisma.folder.create({
 //         data: {
 //             name: req.body.folderName,
@@ -229,12 +209,9 @@ exports.commentDelete = async (req, res, next) => {
 //     // this.foldersGet();
 // }
 // exports.addFilePost = async (req, res, next) => {
-//     console.log(req.file);
-//     console.log(req.body);
 //     const location = req.body.location === '' ? 'root' : req.body.location;
 //     let parentId;
 //     if (req.body.parentId === '') {
-//         console.log('yeah');
         
 //         parentId = await prisma.folder.findUnique({
 //             where: {
@@ -256,7 +233,7 @@ exports.commentDelete = async (req, res, next) => {
 //     } else {
 //         parentId = req.body.parentId;
 //     }
-//     console.log(parentId);
+//     .log(parentId);
     
 //     await prisma.file.create({
 //         data: {
@@ -280,14 +257,12 @@ exports.commentDelete = async (req, res, next) => {
 // }
 // exports.uploadFile = upload.single('file');
 // exports.addPost = (req, res, next) => {
-//     console.log(req.file);
     
 //     res.send('File submitted')
 // }
 
 // // exports.listGet = async (req, res) => {
 // //     const results = await db.getAllTvShows();
-// //     console.log(await getGenresAndChannels(results));
 // //     res.render('list', await getGenresAndChannels(results));
     
 // // }
